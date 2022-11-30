@@ -1,0 +1,21 @@
+@mixin flex($align) {
+  display: flex;
+  align-items: $align;
+  justify-content: space-between;
+}
+@mixin transition($property, $duration, $function) {
+  transition: $property $duration $function;
+  -webkit-transition: $property $duration $function;
+}
+
+.en {
+  font-family: $font-en;
+  letter-spacing: 0;
+}
+.kr {
+  font-family: $font-kr;
+}
+.number {
+  font-family: $font-number;
+  letter-spacing: 0;
+}

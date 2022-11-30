@@ -1,45 +1,38 @@
-import Head from 'next/head'
-import { GetStaticProps } from 'next'
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPostsForHome } from '../lib/api'
-import { CMS_NAME } from '../lib/constants'
+import Head from "next/head";
+import { GetStaticProps } from "next";
+import Container from "components/Layout/container";
+import Intro from "components/Main/intro";
+import Layout from "components/Layout/layout";
+import { getAllPostsForHome, getMenu } from "lib/api";
+import { CMS_NAME } from "lib/constants";
+import Project from "components/Main/project";
+import Skills from "components/Main/skills";
 
-export default function Index({ allPosts: { edges }, preview }) {
-  const heroPost = edges[0]?.node
-  const morePosts = edges.slice(1)
-
+const Index = ({ allPosts: { edges }, allMenus }) => {
+  const gnbMenu = allMenus?.edges;
+  const heroPost = edges[0]?.node;
+  const morePosts = edges.slice(1);
   return (
-    <Layout preview={preview}>
+    <Layout gnbMenu={gnbMenu}>
       <Head>
-        <title>Next.js Blog Example with {CMS_NAME}</title>
+        <title>{CMS_NAME}</title>
       </Head>
       <Container>
         <Intro />
-        {heroPost && (
-          <HeroPost
-            title={heroPost.title}
-            coverImage={heroPost.featuredImage}
-            date={heroPost.date}
-            author={heroPost.author}
-            slug={heroPost.slug}
-            excerpt={heroPost.excerpt}
-          />
-        )}
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        <Project heroPost={heroPost} morePosts={morePosts} />
+        <Skills />
       </Container>
     </Layout>
-  )
-}
+  );
+};
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview)
-
+  const allPosts = await getAllPostsForHome(preview);
+  const allMenus = await getMenu();
   return {
-    props: { allPosts, preview },
+    props: { allPosts, preview, allMenus },
     revalidate: 10,
-  }
-}
+  };
+};
+
+export default Index;
