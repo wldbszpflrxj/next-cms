@@ -10,8 +10,8 @@ import Skills from "components/Main/skills";
 
 const Index = ({ allPosts: { edges }, allMenus }) => {
   const gnbMenu = allMenus?.edges;
-  const heroPost = edges[0]?.node;
-  const morePosts = edges.slice(1);
+  const heroPost = edges.slice(0, 5);
+  const morePosts = edges.length;
   return (
     <Layout gnbMenu={gnbMenu}>
       <Head>

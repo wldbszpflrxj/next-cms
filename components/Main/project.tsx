@@ -1,9 +1,10 @@
 import React from "react";
-import MoreStories from "components/more-stories";
-import HeroPost from "components/hero-post";
+import HeroPost from "components/Main/hero-post";
 import styles from "./main.module.scss";
+import Link from "next/link";
 
 const Project = ({ heroPost, morePosts }) => {
+  console.log(heroPost);
   return (
     <section id={styles.project}>
       <div className={styles.inner}>
@@ -21,20 +22,21 @@ const Project = ({ heroPost, morePosts }) => {
               함께 참여합니다.
             </p>
           </div>
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.featuredImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          <div className={styles.project}>
+            {morePosts < 6 &&
+              heroPost.map(({ node }, idx) => (
+                <HeroPost
+                  key={idx}
+                  idx={idx}
+                  title={node.title}
+                  coverImage={node.featuredImage}
+                  slug={node.slug}
+                />
+              ))}
+          </div>
         </div>
         <div className={styles.see_btnwr}>
-          <a href="#">see all project</a>
+          <Link href="#">see all project</Link>
         </div>
       </div>
     </section>
