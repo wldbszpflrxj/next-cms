@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { CMS_NAME } from "lib/constants";
 import styles from "components/Layout/layout.module.scss";
